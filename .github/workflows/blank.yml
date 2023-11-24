@@ -1,0 +1,40 @@
+name: Java Docker Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/openjdk/jdk:21-ubuntu
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK and Build Docker Image
+        run: |
+
+          # Compile the Java code
+          javac HelloWorld.java
+
+          # Create a custom JRE using jlink
+          jlink \
+              --add-modules java.base \
+              --strip-debug \
+              --no-man-pages \
+              --no-header-files \
+              --compress=2 \
+              --output /javaruntime
+
+          # Build Docker image
+          docker build -t java-docker-jre-example .
+
+      - name: Run Docker Container
+        run: |
+          # Run Docker container
+          docker run java-docker-jre-example
+
