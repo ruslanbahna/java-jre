@@ -1,6 +1,9 @@
 # Use an official OpenJDK runtime as a parent image
 FROM mcr.microsoft.com/openjdk/jdk:21-ubuntu AS jre-builder
 
+# Add labels to the jre-builder stage
+LABEL stage=jre-builder
+
 # Set the working directory to /app
 WORKDIR /app
 
@@ -24,6 +27,9 @@ RUN ldd /javaruntime/bin/java
 
 # Final image using Ubuntu as the base image
 FROM mcr.microsoft.com/openjdk/jdk:21-ubuntu
+
+# Add labels to the final stage
+LABEL stage=final
 
 # Copy the custom JRE from the jre-builder stage
 COPY --from=jre-builder /javaruntime /javaruntime

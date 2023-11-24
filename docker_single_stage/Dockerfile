@@ -1,6 +1,9 @@
 # Use an official OpenJDK runtime as a parent image
 FROM mcr.microsoft.com/openjdk/jdk:21-ubuntu
 
+# Add labels to the single stage
+LABEL stage=single
+
 # Set the working directory to /app
 WORKDIR /app
 
