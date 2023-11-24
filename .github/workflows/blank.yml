@@ -18,8 +18,9 @@ jobs:
       - name: Set up JDK and Build Docker Image
         run: |
 
-          # Compile the Java code
-          javac HelloWorld.java
+          # Use the Dockerfile mentioned earlier
+          docker build -t benchmark-image-21-distroless -f /Dockerfile .
+        working-directory: ${{ github.workspace }}
 
           # Create a custom JRE using jlink
           jlink \
