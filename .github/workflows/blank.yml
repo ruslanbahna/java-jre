@@ -14,10 +14,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
+        
       - name: Set up JDK and Build Docker Image
         run: |
-
           # Use the Dockerfile mentioned earlier
           docker build -t benchmark-image-21-distroless -f /Dockerfile .
         working-directory: ${{ github.workspace }}
