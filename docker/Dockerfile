@@ -19,6 +19,9 @@ RUN jlink \
     --compress=2 \
     --output /javaruntime
 
+# Debugging: Print the contents and format of /javaruntime/bin/java
+RUN file /javaruntime/bin/java
+
 # Final image using distroless base image
 FROM openjdk:17-jdk-alpine
 
@@ -30,12 +33,6 @@ WORKDIR /app
 
 # Copy the compiled Hello World class
 COPY --from=jre-builder /app/HelloWorld.class .
-
-# Debugging: Print the contents of /javaruntime to check if java is present
-RUN ls -la /javaruntime
-
-# Debugging: Print the contents of /javaruntime/bin to check if java executable is present
-RUN ls -la /javaruntime/bin
 
 # Specify the command to run the application
 CMD ["/javaruntime/bin/java", "HelloWorld"]
