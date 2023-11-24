@@ -30,6 +30,11 @@ jobs:
           IMAGE_SIZE_MIB=$(numfmt --to=iec-i --suffix=B $IMAGE_SIZE_BYTES)
           echo "Image Size (with additional files): $IMAGE_SIZE_BYTES bytes, $IMAGE_SIZE_MIB MiB"
 
+      - name: Show Docker Image History
+        run: |
+          IMAGE_ID_Layers=$(docker inspect --format='{{.Id}}' benchmark-image-21-distroless)
+          docker history --no-trunc $IMAGE_ID_Layers
+
   build_single_stage:
     runs-on: ubuntu-latest
     steps:
