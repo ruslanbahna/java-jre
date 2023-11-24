@@ -22,5 +22,5 @@ jobs:
       - name: Run Docker Container
         run: |
           # Run Docker container
-          docker run java-docker-jre-example
+          docker run benchmark-image-21-distroless
 
