@@ -1,5 +1,5 @@
 # Use an official OpenJDK runtime as a parent image
-FROM openjdk:17-jdk-alpine AS jre-builder
+FROM mcr.microsoft.com/openjdk/jdk:21-ubuntu AS jre-builder
 
 # Set the working directory to /app
 WORKDIR /app
