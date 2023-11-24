@@ -23,7 +23,7 @@ RUN jlink \
 RUN ldd /javaruntime/bin/java
 
 # Final image using Ubuntu as the base image
-FROM mcr.microsoft.com/openjdk/jdk:21-distroless
+FROM mcr.microsoft.com/openjdk/jdk:21-ubuntu
 
 # Copy the custom JRE from the jre-builder stage
 COPY --from=jre-builder /javaruntime /javaruntime
@@ -35,4 +35,4 @@ WORKDIR /app
 COPY --from=jre-builder /app/HelloWorld.class .
 
 # Specify the command to run the application
-CMD ["/javaruntime/bin/java", "-cp", "/app", "HelloWorld"]
+CMD ["/javaruntime/bin/java", "HelloWorld"]
