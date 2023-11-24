@@ -19,8 +19,8 @@ RUN jlink \
     --compress=2 \
     --output /javaruntime
 
-# Debugging: Print the contents and format of /javaruntime/bin/java
-RUN file /javaruntime/bin/java
+# Debugging: Print the contents and format of /javaruntime/bin/java using stat
+RUN stat /javaruntime/bin/java
 
 # Final image using distroless base image
 FROM openjdk:17-jdk-alpine
