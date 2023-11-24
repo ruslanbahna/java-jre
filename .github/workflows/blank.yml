@@ -26,8 +26,9 @@ jobs:
       - name: Run
         run: |
           IMAGE_ID=$(docker inspect --format='{{.Id}}' benchmark-image-21-distroless)
-          IMAGE_SIZE=$(docker image inspect --format='{{.Size}}' $IMAGE_ID)
-          echo "Image Size: $(numfmt --to=iec-i --suffix=B $IMAGE_SIZE)"
+          IMAGE_SIZE_BYTES=$(docker image inspect --format='{{.Size}}' $IMAGE_ID)
+          IMAGE_SIZE_MIB=$(numfmt --to=iec-i --suffix=B $IMAGE_SIZE_BYTES)
+          echo "Image Size (with additional files): $IMAGE_SIZE_BYTES bytes, $IMAGE_SIZE_MIB MiB"
 
   build_single_stage:
     runs-on: ubuntu-latest
@@ -49,8 +50,10 @@ jobs:
       - name: Run
         run: |
           IMAGE_ID=$(docker inspect --format='{{.Id}}' benchmark-image-21-ubuntu)
-          IMAGE_SIZE=$(docker image inspect --format='{{.Size}}' $IMAGE_ID)
-          echo "Image Size: $(numfmt --to=iec-i --suffix=B $IMAGE_SIZE)"
+          IMAGE_SIZE_BYTES=$(docker image inspect --format='{{.Size}}' $IMAGE_ID)
+          IMAGE_SIZE_MIB=$(numfmt --to=iec-i --suffix=B $IMAGE_SIZE_BYTES)
+          echo "Image Size (with additional files): $IMAGE_SIZE_BYTES bytes, $IMAGE_SIZE_MIB MiB"
+
 
 
 
