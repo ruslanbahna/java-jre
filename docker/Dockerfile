@@ -35,4 +35,4 @@ WORKDIR /app
 COPY --from=jre-builder /app/HelloWorld.class .
 
 # Specify the command to run the application
-CMD ["/javaruntime/bin/java", "HelloWorld"]
+CMD ["/javaruntime/bin/java", "-cp", "/app", "HelloWorld"]
