@@ -23,4 +23,8 @@ jobs:
         run: |
           # Run Docker container
           docker run benchmark-image-21-distroless
+      - name: Check Container Size
+        run: |
+          IMAGE_ID=$(docker inspect --format='{{.Id}}' mcr.microsoft.com/openjdk/jdk:21-distroless)
+          docker history $IMAGE_ID
 
