@@ -19,11 +19,5 @@ RUN jlink \
     --compress=2 \
     --output /javaruntime
 
-# Debugging: Print the dynamic library dependencies of /javaruntime/bin/java
-RUN ldd /javaruntime/bin/java
-
-# Copy the compiled Hello World class
-COPY HelloWorld.class .
-
 # Specify the command to run the application
 CMD ["/javaruntime/bin/java", "HelloWorld"]
