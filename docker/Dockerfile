@@ -22,8 +22,8 @@ RUN jlink \
 # Debugging: Print the dynamic library dependencies of /javaruntime/bin/java
 RUN ldd /javaruntime/bin/java
 
-# Final image using distroless base image
-FROM openjdk:17-jdk-alpine
+# Final image using Ubuntu as the base image
+FROM mcr.microsoft.com/openjdk/jdk:21-ubuntu
 
 # Copy the custom JRE from the jre-builder stage
 COPY --from=jre-builder /javaruntime /javaruntime
