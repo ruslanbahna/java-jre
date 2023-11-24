@@ -23,7 +23,7 @@ RUN jlink \
 RUN ldd /javaruntime/bin/java
 
 # Final image using Ubuntu as the base image
-FROM mmcr.microsoft.com/openjdk/jdk:21-ubuntu
+FROM mcr.microsoft.com/openjdk/jdk:21-ubuntu
 
 # Copy the custom JRE from the jre-builder stage
 COPY --from=jre-builder /javaruntime /javaruntime
