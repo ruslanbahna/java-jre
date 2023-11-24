@@ -26,6 +26,7 @@ jobs:
       - name: Run
         run: |
           IMAGE_ID=$(docker inspect --format='{{.Id}}' benchmark-image-21-distroless)
-          docker image inspect --format='{{.Size}}' $IMAGE_ID
+          IMAGE_SIZE=$(docker image inspect --format='{{.Size}}' $IMAGE_ID)
+          echo "Image Size: $(numfmt --to=iec-i --suffix=B $IMAGE_SIZE)"
 
 
