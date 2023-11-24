@@ -29,4 +29,28 @@ jobs:
           IMAGE_SIZE=$(docker image inspect --format='{{.Size}}' $IMAGE_ID)
           echo "Image Size: $(numfmt --to=iec-i --suffix=B $IMAGE_SIZE)"
 
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Set up JDK and Build Docker Image
+        run: |
+          # Use the Dockerfile mentioned earlier
+          docker build -t benchmark-image-21-ubuntu -f docker_single_stage/Dockerfile .
+        working-directory: ${{ github.workspace }}
+
+
+      - name: Run Docker Container
+        run: |
+          # Run Docker container
+          docker run benchmark-image-21-ubuntu
+      - name: Run
+        run: |
+          IMAGE_ID=$(docker inspect --format='{{.Id}}' benchmark-image-21-ubuntu)
+          IMAGE_SIZE=$(docker image inspect --format='{{.Size}}' $IMAGE_ID)
+          echo "Image Size: $(numfmt --to=iec-i --suffix=B $IMAGE_SIZE)"
+
+
 

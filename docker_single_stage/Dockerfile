@@ -1,5 +1,5 @@
 # Use an official OpenJDK runtime as a parent image
-FROM mcr.microsoft.com/openjdk/jdk:21-ubuntu AS jre-builder
+FROM mcr.microsoft.com/openjdk/jdk:21-ubuntu
 
 # Set the working directory to /app
 WORKDIR /app
@@ -22,17 +22,8 @@ RUN jlink \
 # Debugging: Print the dynamic library dependencies of /javaruntime/bin/java
 RUN ldd /javaruntime/bin/java
 
-# Final image using Ubuntu as the base image
-FROM mmcr.microsoft.com/openjdk/jdk:21-ubuntu
-
-# Copy the custom JRE from the jre-builder stage
-COPY --from=jre-builder /javaruntime /javaruntime
-
-# Set the working directory to /app
-WORKDIR /app
-
 # Copy the compiled Hello World class
-COPY --from=jre-builder /app/HelloWorld.class .
+COPY HelloWorld.class .
 
 # Specify the command to run the application
 CMD ["/javaruntime/bin/java", "HelloWorld"]
