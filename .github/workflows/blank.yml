@@ -1,4 +1,4 @@
-name: Java Docker Workflow
+name: Java Build and Docker
 
 on:
   push:
@@ -6,26 +6,34 @@ on:
       - main
 
 jobs:
-  build_multistage:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Set up JDK and Build Java application
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'temurin'
+        java-version: '17'
 
-      - name: Compile Java Code
-        run: javac HelloWorld.java
+    - name: Compile Java code
+      run: javac HelloWorld.java
 
-      - name: Set up JDK and Build Docker Image
-        run: |
-          docker build -t benchmark-image-21-distroless -f docker/Dockerfile .
-        working-directory: ${{ github.workspace }}
+  docker:
+    runs-on: ubuntu-latest
 
-      - name: Run Docker Container
-        run: docker run benchmark-image-21-distroless
+    needs: build
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build Docker image
+      run: docker build -t benchmark-image-21-distroless -f docker/Dockerfile .
+      
+    - name: Run Docker container
+      run: docker run benchmark-image-21-distroless
 
