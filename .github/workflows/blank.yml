@@ -10,7 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin' # See 'Supported distributions' for available options
+          java-version: '17'
+      - run: java HelloWorl.java
         
       - name: Set up JDK and Build Docker Image
         run: |
@@ -34,36 +39,6 @@ jobs:
         run: |
           IMAGE_ID_Layers=$(docker inspect --format='{{.Id}}' benchmark-image-21-distroless)
           docker history --no-trunc $IMAGE_ID_Layers
-
-  build_single_stage:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        
-      - name: Set up JDK and Build Docker Image
-        run: |
-          # Use the Dockerfile mentioned earlier
-          docker build -t benchmark-image-21-ubuntu -f docker_single_stage/Dockerfile .
-        working-directory: ${{ github.workspace }}
-
-
-      - name: Run Docker Container
-        run: |
-          # Run Docker container
-          docker run benchmark-image-21-ubuntu
-      - name: Run
-        run: |
-          IMAGE_ID=$(docker inspect --format='{{.Id}}' benchmark-image-21-ubuntu)
-          IMAGE_SIZE_BYTES=$(docker image inspect --format='{{.Size}}' $IMAGE_ID)
-          IMAGE_SIZE_MIB=$(numfmt --to=iec-i --suffix=B $IMAGE_SIZE_BYTES)
-          echo "Image Size (with additional files): $IMAGE_SIZE_BYTES bytes, $IMAGE_SIZE_MIB MiB"
-
-      - name: Show Docker Image History
-        run: |
-          IMAGE_ID_Layers=$(docker inspect --format='{{.Id}}' benchmark-image-21-ubuntu)
-          docker history --no-trunc $IMAGE_ID_Layers
-
 
 
 
