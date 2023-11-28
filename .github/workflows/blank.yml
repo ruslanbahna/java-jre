@@ -19,7 +19,7 @@ jobs:
           java-version: '17'
       - run: |
           javac HelloWorld.java
-          java HelloWorld
+          jar cfe app.jar HelloWorld HelloWorld.class
 
       - name: Set up JDK and Build Docker Image
         run: |
