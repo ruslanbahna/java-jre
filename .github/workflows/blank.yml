@@ -20,9 +20,13 @@ jobs:
       - run: |
           javac HelloWorld.java
           jar cfe app.jar HelloWorld HelloWorld.class
+          echo "Java application successfully compiled and packaged."
 
       - name: Set up JDK and Build Docker Image
         run: |
+          # Print the contents of Dockerfile for debugging
+          cat docker/Dockerfile
+
           # Use the Dockerfile mentioned earlier
           docker build -t benchmark-image-21-distroless -f docker/Dockerfile .
         working-directory: ${{ github.workspace }}
@@ -31,6 +35,10 @@ jobs:
         run: |
           # Run Docker container
           docker run benchmark-image-21-distroless
+
+      - name: Print Java Version in Docker Container
+        run: |
+          docker run benchmark-image-21-distroless java -version
 
       - name: Run
         run: |
