@@ -11,23 +11,21 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      
+
       - name: Set up JDK and Build Java application
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
-      - run: |
-          javac HelloWorld.java
-          jar cfe app.jar HelloWorld HelloWorld.class
+
+      - name: Compile Java Code
+        run: javac HelloWorld.java
 
       - name: Set up JDK and Build Docker Image
         run: |
-          # Use the Dockerfile mentioned earlier
           docker build -t benchmark-image-21-distroless -f docker/Dockerfile .
         working-directory: ${{ github.workspace }}
 
       - name: Run Docker Container
-        run: |
-          # Run Docker container
-          docker run benchmark-image-21-distroless
+        run: docker run benchmark-image-21-distroless
+

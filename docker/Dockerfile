@@ -1,8 +1,6 @@
 FROM eclipse-temurin:21-jre
 WORKDIR /opt/app
 
-COPY HelloWorld.java /opt/app
+COPY HelloWorld.jar /opt/app
 
-RUN javac HelloWorld.java
-
-CMD ["java", "HelloWorld"]
+CMD ["java", "-jar", "HelloWorld.jar"]
