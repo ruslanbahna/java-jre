@@ -24,6 +24,9 @@ COPY --from=build-stage /javaruntime $JAVA_HOME
 # Continue with your application deployment
 RUN mkdir /opt/app
 WORKDIR /opt/app
-COPY HelloWorld.class .
+
+# Adjust the source path for the HelloWorld.class file
+COPY --from=build-stage /app/HelloWorld.class .
 
 CMD ["java", "HelloWorld"]
+
