@@ -6,12 +6,11 @@ on:
       - main
 
 jobs:
-  build multi stage:
+  build-multi-stage:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
 
     - name: Build Docker image
       run: docker build -t multistage -f docker/Dockerfile .
